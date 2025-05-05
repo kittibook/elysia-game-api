@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String
+  age        Int
+  disease    String // โรค
+  score      String
+  time       String
+  DatasetId  Int
+  Dataset    Dataset  @relation(fields: [DatasetId], references: [id])
+  Positionid Int
+  Position   Position @relation(fields: [Positionid], references: [id])
+  Game Game[]
+  createdAt  DateTime @default(now())
+}
+
+model Dataset {
+  id         Int      @id @default(autoincrement())
+  dateStart  DateTime
+  dateEnd    DateTime
+  Name       String
+  details    String
+  Positionid Int
+  Position   Position @relation(fields: [Positionid], references: [id])
+  User       User[]
+}
+
+model Position {
+  id        Int       @id @default(autoincrement())
+  latitude  String
+  longitude String
+  Dataset   Dataset[]
+  User      User[]
+}
+
+model Game {
+  id       Int    @id @default(autoincrement())
+  UserId Int
+  User   User @relation(fields: [UserId], references: [id])
+  name     String
+  problems Json?
+  detail   Json?
+  score    Int
+  time     String
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  roleId    Int
+  role      Role     @relation(fields: [roleId], references: [id])
+  actions   Action[] // ความสัมพันธ์กับ Action
+  createdAt DateTime @default(now())
+}
+
+model Role {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  admins Admin[]
+}
+
+model Action {
+  id        Int      @id @default(autoincrement())
+  adminId   Int
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  action    String // เช่น "LOGIN", "DELETE_USER", "UPDATE_ROLE"
+  details   String? // รายละเอียดเพิ่มเติม เช่น "ลบ User ID 5"
+  timestamp DateTime @default(now()) // เวลาที่ทำ Action
+}
