@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import gameController from "../Controllers/game.controller";
+import gameController from "../Controllers/Games/game.controller";
 
 export const game = new Elysia({ prefix : "/game"})
   .post('/upload', gameController.gameSave)

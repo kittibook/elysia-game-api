@@ -10,7 +10,7 @@ interface sign {
     id: number;
     username: string;
     email: string;
-    roleId: number;
+    sessionId: string;
     createdAt: Date;
 }
 
