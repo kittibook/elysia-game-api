@@ -12,7 +12,11 @@ export default {
                 console.log('getSetting : Fetching Setting')
             }
 
-            const Setting = await prisma.settingGame.findMany({})
+            const Setting = await prisma.settingGame.findMany({
+                include : {
+                    SettingGameDetail : true
+                }
+            })
 
             if (config.debugger && Setting) {
                 console.log('getSetting : Data SettingGame ', Setting)
@@ -43,13 +47,13 @@ export default {
             const { id } = params
 
             if (config.debugger) {
-                console.log('getSetting : Param Id = ', id)
+                console.log('getSettingById : Param Id = ', id)
             }
 
             const Setting = await prisma.settingGame.findFirst({ where: { SettingGame_id: Number(id) } })
 
-            if (config.debugger && Setting) {
-                console.log('getSetting : Data SettingGame ', Setting)
+            if (config.debugger) {
+                console.log('getSettingById : Data SettingGame ', Setting)
             }
 
             return {

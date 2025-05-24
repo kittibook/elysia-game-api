@@ -5,10 +5,17 @@ import { auth } from "./Routes/auth.route";
 import { cors } from '@elysiajs/cors'
 import { Dashboard } from "./Routes/admin.route";
 import { PrismaClient } from "@prisma/client";
+import staticPlugin from "@elysiajs/static";
 const prisma = new PrismaClient();
 
 const app = new Elysia()
-  .use(cors({ origin: '*' }))
+  .use(cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  }))
+  .use(staticPlugin())
   .use(
     jwt({
       name: 'jwt',
@@ -16,7 +23,6 @@ const app = new Elysia()
       exp: '1h'
     })
   )
-  .get("/", () => "Hello Elysia")
   .use(game)
   .use(auth)
 
@@ -56,9 +62,9 @@ const app = new Elysia()
   },
     (app) =>
       app
-      .use(Dashboard)
+        .use(Dashboard)
   )
-  
+
   .listen(3000);
 
 console.log(

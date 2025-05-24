@@ -37,6 +37,7 @@ export default {
             if (config.debugger) {
                 console.log('settingGame1 : saved file', { filePath, originalName: image.name });
             }
+
             // เขียนไฟล์ลงระบบ
             await Bun.write(filePath, image);
 
@@ -50,7 +51,7 @@ export default {
                     console.log(`settingGame1 : No settingGamedetail ID`);
                 }
 
-                const detailCreate = await prisma.settingGameDetail.create({ data: { SettingGameid: Number(setting), url: filePath, position: position, problems: problems } })
+                const detailCreate = await prisma.settingGameDetail.create({ data: { SettingGameid: Number(setting), url: filePath, position: position, problems: `${problems}` } })
 
                 if (detailCreate && config.debugger) {
                     console.log(`settingGame1 : SettingGamedetail Create success`);
@@ -62,7 +63,7 @@ export default {
                     },
                     data: {
                         url: filePath,
-                        problems: problems,
+                        problems: `${problems}`,
                         position: position
                     }
                 })
@@ -131,7 +132,7 @@ export default {
                     console.log(`settingGame23 : No settingGamedetail ID`);
                 }
 
-                const detailCreate = await prisma.settingGameDetail.create({ data: { SettingGameid: Number(setting), url: filePath, position: position, problems: problems } })
+                const detailCreate = await prisma.settingGameDetail.create({ data: { SettingGameid: Number(setting), url: filePath, position: position, problems: `${problems}` } })
 
                 if (detailCreate && config.debugger) {
                     console.log(`settingGame23 : SettingGamedetail Create success = ${detailCreate}`);
@@ -143,7 +144,7 @@ export default {
                     },
                     data: {
                         url: filePath,
-                        problems: problems,
+                        problems: `${problems}`,
                         position: position
                     }
                 })
@@ -271,93 +272,130 @@ export default {
                 data: [
                     {
                         SettingGameid: game1.SettingGame_id,
-                        url: '',
-                        position: 'Image-Demo'
+                        url: '/public/image/Image-Demo.png',
+                        position: 'ImageDemo'
+                    },
+                    {
+                        SettingGameid: game1.SettingGame_id,
+                        url: '/public/sound/game1.mp3',
+                        position: 'Sound'
                     },
                     // --------------------------------------------------
                     // game 2
                     {
                         SettingGameid: game2.SettingGame_id, // พื้นหลัง
-                        url: '',
-                        position: 'Background-Card'
+                        url: '/public/image/Background-Card.png',
+                        problems : '["#e51c23", "#259b24", "#ffeb3b"]',
+                        position: 'Card'
                     },
                     {
-                        SettingGameid: game2.SettingGame_id, // สีหน้าการ์ด
-                        url: '',
-                        position: 'Color-Card'
+                        SettingGameid: game2.SettingGame_id,
+                        url: '/public/sound/game2.mp3',
+                        position: 'Sound'
                     },
                     // --------------------------------------------------
                     // game 3
                     {
                         SettingGameid: game3.SettingGame_id, // พื้นหลัง
-                        url: '',
-                        position: 'Background-Card'
+                        url: '/public/image/Background-Card.png',
+                        problems : '[1,2,3,4,5,6,7,8,9]',
+                        position: 'Card'
                     },
                     {
-                        SettingGameid: game3.SettingGame_id, // เลขหน้าการ์ด
-                        url: '',
-                        position: 'Number-Card'
+                        SettingGameid: game3.SettingGame_id,
+                        url: '/public/sound/game3.mp3',
+                        position: 'Sound'
                     },
                     // --------------------------------------------------
                     //game 4
                     {
+                        SettingGameid: game4.SettingGame_id,
+                        url: '/public/sound/game4.mp3',
+                        position: 'Sound'
+                    },
+                    {
                         SettingGameid: game4.SettingGame_id, //ข้อที่ 1
-                        url: '',
-                        position: 'Point-1'
+                        url: '/public/image/cat.png',
+                        answer : 'แมว',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game4.SettingGame_id, //ข้อที่ 2
-                        url: '',
-                        position: 'Point-2'
+                        url: '/public/image/chicken.png',
+                        answer : 'ไก่',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game4.SettingGame_id, //ข้อที่ 3
-                        url: '',
-                        position: 'Point-3'
+                        url: '/public/image/fish.jpg',
+                        answer : 'ปลา',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game4.SettingGame_id, //ข้อที่ 4
-                        url: '',
-                        position: 'Point-4'
+                        url: '/public/image/tiger.png',
+                        answer : 'เสือ',
+                        position: 'Point'
                     },
                     // --------------------------------------------------
                     // game 5
                     {
+                        SettingGameid: game5.SettingGame_id,
+                        url: '/public/sound/game5.mp3',
+                        position: 'Sound'
+                    },
+                    {
                         SettingGameid: game5.SettingGame_id, //ข้อที่ 1
-                        url: '',
-                        position: 'Point-1'
+                        url: '/public/image/chicken.png',
+                        problems :'/public/sound/chicken.mp3',
+                        answer : 'ไก่',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game5.SettingGame_id, //ข้อที่ 2
-                        url: '',
-                        position: 'Point-2'
+                        url: '/public/image/tiger.png',
+                        problems :'/public/sound/tiger.mp3',
+                        answer : 'เสือ',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game5.SettingGame_id, //ข้อที่ 3
-                        url: '',
-                        position: 'Point-3'
+                        url: '/public/image/dog.png',
+                        problems :'/public/sound/dog.mp3',
+                        answer : 'หมา',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game5.SettingGame_id, //ข้อที่ 4
-                        url: '',
-                        position: 'Point-4'
+                        url: '/public/image/cat.png',
+                        problems :'/public/sound/cat.mp3',
+                        answer : 'แมว',
+                        position: 'Point'
                     },
                     // --------------------------------------------------
                     // game 6
                     {
+                        SettingGameid: game6.SettingGame_id,
+                        url: '/public/sound/game6.mp3',
+                        position: 'Sound'
+                    },
+                    {
                         SettingGameid: game6.SettingGame_id, //ข้อที่ 1
-                        url: '',
-                        position: 'Point-1'
+                        url: '/public/sound/soft.mp3',
+                        answer : 'ลม',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game6.SettingGame_id, //ข้อที่ 2
-                        url: '',
-                        position: 'Point-2'
+                        url: '/public/sound/rain.mp3',
+                        answer : 'ฝน',
+                        position: 'Point'
                     },
                     {
                         SettingGameid: game6.SettingGame_id, //ข้อที่ 3
-                        url: '',
-                        position: 'Point-3'
+                        url: '/public/sound/waterfall.mp3',
+                        answer : 'น้ำไหล',
+                        position: 'Point'
                     }
                 ]
             })

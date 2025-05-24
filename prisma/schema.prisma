@@ -75,8 +75,8 @@ model SettingGameDetail {
   SettingGameid        Int
   SettingGame          SettingGame @relation(fields: [SettingGameid], references: [SettingGame_id])
   url                  String
-  answer               String? // สำหรับเกม 456
-  problems             Json? // สำหรับเกม 23
+  answer               String?
+  problems             String?
   position             String
   createdAt            DateTime    @default(now())
 }
